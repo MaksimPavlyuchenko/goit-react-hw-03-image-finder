@@ -5,6 +5,7 @@ import {
   SearchForm,
   SearchFormButton,
   SearchFormButtonLabel,
+  SearchInput,
 } from './Searchbar.styled';
 
 class SearchBar extends Component {
@@ -31,8 +32,7 @@ class SearchBar extends Component {
             <SearchFormButtonLabel>Search</SearchFormButtonLabel>
           </SearchFormButton>
 
-          <input
-            className="input"
+          <SearchInput
             type="text"
             autoComplete="off"
             autoFocus
