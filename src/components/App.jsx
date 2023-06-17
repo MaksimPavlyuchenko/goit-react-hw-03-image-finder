@@ -1,16 +1,22 @@
-export const App = () => {
-  return (
-    <div
-      style={{
-        height: '100vh',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        fontSize: 40,
-        color: '#010101'
-      }}
-    >
-      React homework template
-    </div>
-  );
-};
+import { Component } from 'react';
+
+import SearchBar from './Searchbar/Searchbar';
+
+import { AppStyled } from './App.styled';
+
+class App extends Component {
+  state = {
+    searchValue: '',
+  };
+  onSubmitHendler = searchValue => {
+    this.setState({ searchValue });
+  };
+  render() {
+    return (
+      <AppStyled>
+        <SearchBar onSubmit={this.onSubmitHendler} />
+      </AppStyled>
+    );
+  }
+}
+export default App;
