@@ -4,7 +4,7 @@ import SearchBar from './Searchbar/Searchbar';
 import ImageGallery from './ImageGallery/ImageGallery';
 import Button from './Button/Button';
 import Loader from './Loader/Loader';
-import Modal from './Modal/Modal';
+// import Modal from './Modal/Modal';
 
 import { AppStyled } from './App.styled';
 
@@ -19,7 +19,7 @@ class App extends Component {
     return (
       <AppStyled>
         <SearchBar onSubmit={this.onSubmitHendler} />
-        <ImageGallery />
+        <ImageGallery searchData={this.state.searchValue} />
         <Button />
         <Loader />
         {/* <Modal /> */}
