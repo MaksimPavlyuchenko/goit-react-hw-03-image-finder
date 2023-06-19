@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import { ReactComponent as MyIcon } from '../search.svg';
 
 import {
   SearchBarStyled,
@@ -20,6 +21,10 @@ class SearchBar extends Component {
 
   onSubmitHandler = evt => {
     evt.preventDefault();
+    if (this.state.searchValue.trim() === '') {
+      alert('Bad request');
+      return;
+    }
     this.props.onSubmit(this.state);
 
     this.setState({
@@ -32,7 +37,9 @@ class SearchBar extends Component {
       <SearchBarStyled>
         <SearchForm onSubmit={this.onSubmitHandler}>
           <SearchFormButton type="submit">
-            <SearchFormButtonLabel>Search</SearchFormButtonLabel>
+            <SearchFormButtonLabel>
+              <MyIcon />
+            </SearchFormButtonLabel>
           </SearchFormButton>
 
           <SearchInput
