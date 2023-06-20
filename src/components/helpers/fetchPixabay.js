@@ -8,12 +8,11 @@ const searchParams = new URLSearchParams({
   image_type: 'photo',
   orientation: 'horizontal',
   per_page: 12,
-  page: 1,
 });
 
-async function fetchPixabay(searchValue) {
+async function fetchPixabay(searchValue, numberPage) {
   const response = await axios.get(
-    `${BASE_URL}?q=${searchValue}&${searchParams}`
+    `${BASE_URL}?q=${searchValue}&page=${numberPage}&${searchParams}`
   );
   return response;
 }

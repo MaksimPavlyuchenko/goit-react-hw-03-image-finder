@@ -1,6 +1,10 @@
 import { ButtonStyled } from './Button.styled';
 
-const Button = () => {
-  return <ButtonStyled type="button">Load More</ButtonStyled>;
+const Button = props => {
+  return (
+    <ButtonStyled type="button" onClick={props.onClick}>
+      Load More
+    </ButtonStyled>
+  );
 };
 export default Button;

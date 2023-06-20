@@ -22,7 +22,7 @@ class SearchBar extends Component {
   onSubmitHandler = evt => {
     evt.preventDefault();
     if (this.state.searchValue.trim() === '') {
-      alert('Bad request');
+      alert('Sorry!!! Bad request');
       return;
     }
     this.props.onSubmit(this.state);
