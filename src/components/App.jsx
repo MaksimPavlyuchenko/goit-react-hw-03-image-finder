@@ -24,21 +24,20 @@ class App extends Component {
       prevState.pageNumber !== pageNumber
     ) {
       this.setState({ loading: true });
-      setTimeout(() => {
-        fetchPixabay(searchValue, pageNumber)
-          .then(response =>
-            this.setState(state => ({
-              imgArray: [...state.imgArray, ...response.data.hits],
-              loadMore: pageNumber < Math.ceil(response.data.totalHits / 12),
-            }))
-          )
-          .catch(() => {
-            alert('Ooops!!!');
-          })
-          .finally(() => {
-            this.setState({ loading: false });
-          });
-      }, 1000);
+
+      fetchPixabay(searchValue, pageNumber)
+        .then(response =>
+          this.setState(state => ({
+            imgArray: [...state.imgArray, ...response.data.hits],
+            loadMore: pageNumber < Math.ceil(response.data.totalHits / 12),
+          }))
+        )
+        .catch(() => {
+          alert('Ooops!!!');
+        })
+        .finally(() => {
+          this.setState({ loading: false });
+        });
     }
   };
 
