@@ -10,10 +10,11 @@ const searchParams = new URLSearchParams({
   per_page: 12,
 });
 
-async function fetchPixabay(searchValue, numberPage) {
-  const response = await axios.get(
-    `${BASE_URL}?q=${searchValue}&page=${numberPage}&${searchParams}`
+function fetchPixabay(searchValue, pageNumber) {
+  const response = axios.get(
+    `${BASE_URL}?q=${searchValue}&page=${pageNumber}&${searchParams}`
   );
+
   return response;
 }
 

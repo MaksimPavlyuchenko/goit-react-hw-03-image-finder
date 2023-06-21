@@ -1,29 +1,75 @@
 import { Component } from 'react';
-import { ToastContainer } from 'react-toastify';
 
-import SearchBar from './Searchbar/Searchbar';
+import fetchPixabay from './helpers/fetchPixabay';
+import Searchbar from './Searchbar/Searchbar';
+import Button from './Button/Button';
 import ImageGallery from './ImageGallery/ImageGallery';
+import Loader from './Loader/Loader';
 
 import { AppStyled } from './App.styled';
 
 class App extends Component {
   state = {
     searchValue: '',
+    pageNumber: 1,
+    imgArray: [],
+    loadMore: false,
+    loading: false,
   };
 
-  onSubmitHendler = searchValue => {
-    this.setState({ searchValue });
+  componentDidUpdate = (prevProps, prevState) => {
+    const { searchValue, pageNumber } = this.state;
+    if (
+      prevState.searchValue !== searchValue ||
+      prevState.pageNumber !== pageNumber
+    ) {
+      this.setState({ loading: true });
+      setTimeout(() => {
+        fetchPixabay(searchValue, pageNumber)
+          .then(response =>
+            this.setState(state => ({
+              imgArray: [...state.imgArray, ...response.data.hits],
+              loadMore: pageNumber < Math.ceil(response.data.totalHits / 12),
+            }))
+          )
+          .catch(() => {
+            alert('Ooops!!!');
+          })
+          .finally(() => {
+            this.setState({ loading: false });
+          });
+      }, 1000);
+    }
+  };
+
+  onClickButtonMore = () => {
+    this.setState(prevState => ({
+      pageNumber: prevState.pageNumber + 1,
+    }));
+  };
+
+  onSubmitHandler = searchValue => {
+    this.setState({
+      searchValue,
+      pageNumber: 1,
+      imgArray: [],
+      loadMore: false,
+    });
+  };
+
+  onResetPage = () => {
+    this.setState({ pageNumber: 1 });
   };
 
   render() {
-    const { searchValue } = this.state;
-
+    const { loadMore, imgArray, loading } = this.state;
     return (
       <AppStyled>
-        <SearchBar onSubmit={this.onSubmitHendler} />
-        <ImageGallery searchData={searchValue} />
+        <Searchbar onSubmitHandler={this.onSubmitHandler} />
+        {loading && <Loader />}
+        <ImageGallery imgArray={imgArray} />
 
-        <ToastContainer autoClose={3000} position="top-center" />
+        {loadMore && <Button onClick={this.onClickButtonMore} />}
       </AppStyled>
     );
   }

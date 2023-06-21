@@ -1,22 +1,16 @@
 import { Component } from 'react';
 import { ImageGalleryItemStyled, Image } from './ImageGalleryItem.styled';
+
 import Modal from 'components/Modal/Modal';
 
 class ImageGalleryItem extends Component {
   state = {
     isShow: false,
   };
-
-  componentWillUnmount = () => {
-    console.log('Unmount');
-    this.props.onReset();
-  };
-
-  onOpenHendler = () => {
+  onOpenModal = () => {
     this.setState({ isShow: true });
   };
-
-  onCloseHendler = () => {
+  onCloseModal = () => {
     this.setState({ isShow: false });
   };
 
@@ -24,12 +18,10 @@ class ImageGalleryItem extends Component {
     const { smallFormat, largeFormat } = this.props;
     const { isShow } = this.state;
     return (
-      <ImageGalleryItemStyled>
-        <Image src={smallFormat} alt="" onClick={this.onOpenHendler} />
+      <ImageGalleryItemStyled onClick={this.onOpenModal}>
+        <Image src={smallFormat} alt="" />
         {isShow && (
-          <Modal onClick={this.onCloseHendler}>
-            {<img src={largeFormat} alt="" />}
-          </Modal>
+          <Modal largeFormat={largeFormat} onClose={this.onCloseModal} />
         )}
       </ImageGalleryItemStyled>
     );

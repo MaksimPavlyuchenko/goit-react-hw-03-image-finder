@@ -3,29 +3,33 @@ import { ModalStyled, Overlay } from './Modal.styled';
 
 class Modal extends Component {
   componentDidMount = () => {
-    window.addEventListener('keydown', this.onKeydown);
+    window.addEventListener('keydown', this.eventModal);
   };
 
   componentWillUnmount = () => {
-    window.removeEventListener('keydown', this.onKeydown);
+    window.removeEventListener('keydown', this.eventModal);
   };
 
-  onKeydown = e => {
+  eventModal = e => {
     if (e.code === 'Escape') {
-      this.props.onClick();
+      this.props.onClose();
     }
   };
 
   onClickBackdrop = e => {
-    if (e.currentTarget === e.target) {
-      this.props.onClick();
+    if (e.target === e.currentTarget) {
+      this.props.onClose();
     }
   };
 
   render() {
+    const { largeFormat } = this.props;
+
     return (
       <Overlay onClick={this.onClickBackdrop}>
-        <ModalStyled>{this.props.children}</ModalStyled>
+        <ModalStyled>
+          <img src={largeFormat} alt="" />
+        </ModalStyled>
       </Overlay>
     );
   }
