@@ -5,6 +5,7 @@ import Searchbar from './Searchbar/Searchbar';
 import Button from './Button/Button';
 import ImageGallery from './ImageGallery/ImageGallery';
 import Loader from './Loader/Loader';
+import Modal from 'components/Modal/Modal';
 
 import { AppStyled } from './App.styled';
 
@@ -15,10 +16,12 @@ class App extends Component {
     imgArray: [],
     loadMore: false,
     loading: false,
+    largeFormat: '',
   };
 
   componentDidUpdate = (prevProps, prevState) => {
     const { searchValue, pageNumber } = this.state;
+
     if (
       prevState.searchValue !== searchValue ||
       prevState.pageNumber !== pageNumber
@@ -56,18 +59,25 @@ class App extends Component {
     });
   };
 
-  onResetPage = () => {
-    this.setState({ pageNumber: 1 });
+  onOpenModal = largeFormat => {
+    this.setState({ isShow: true, largeFormat: largeFormat });
+  };
+
+  onCloseModal = () => {
+    this.setState({ isShow: false });
   };
 
   render() {
-    const { loadMore, imgArray, loading } = this.state;
+    const { loadMore, imgArray, loading, isShow, largeFormat } = this.state;
+
     return (
       <AppStyled>
         <Searchbar onSubmitHandler={this.onSubmitHandler} />
         {loading && <Loader />}
-        <ImageGallery imgArray={imgArray} />
-
+        <ImageGallery imgArray={imgArray} onClick={this.onOpenModal} />
+        {isShow && (
+          <Modal onClose={this.onCloseModal} largeFormat={largeFormat} />
+        )}
         {loadMore && <Button onClick={this.onClickButtonMore} />}
       </AppStyled>
     );

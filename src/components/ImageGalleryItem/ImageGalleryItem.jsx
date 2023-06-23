@@ -1,30 +1,21 @@
 import { Component } from 'react';
 import { ImageGalleryItemStyled, Image } from './ImageGalleryItem.styled';
 
-import Modal from 'components/Modal/Modal';
 import PropTypes from 'prop-types';
 
 class ImageGalleryItem extends Component {
-  state = {
-    isShow: false,
-  };
-  onOpenModal = () => {
-    this.setState({ isShow: true });
-  };
-  onCloseModal = () => {
-    this.setState({ isShow: false });
-  };
-
   render() {
-    const { smallFormat, largeFormat } = this.props;
-    const { isShow } = this.state;
+    const { smallFormat, onClick, largeFormat } = this.props;
 
     return (
-      <ImageGalleryItemStyled onClick={this.onOpenModal}>
-        <Image src={smallFormat} alt="" />
-        {isShow && (
-          <Modal largeFormat={largeFormat} onClose={this.onCloseModal} />
-        )}
+      <ImageGalleryItemStyled>
+        <Image
+          src={smallFormat}
+          alt=""
+          onClick={() => {
+            onClick(largeFormat);
+          }}
+        />
       </ImageGalleryItemStyled>
     );
   }
@@ -33,5 +24,6 @@ export default ImageGalleryItem;
 
 ImageGalleryItem.propsTypes = {
   smallFormat: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired,
   largeFormat: PropTypes.string.isRequired,
 };

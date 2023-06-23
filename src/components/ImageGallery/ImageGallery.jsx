@@ -4,7 +4,7 @@ import { ImageGalleryStyled } from './ImageGallery.styled';
 import PropTypes from 'prop-types';
 
 const ImageGallery = props => {
-  const { imgArray } = props;
+  const { imgArray, onClick } = props;
 
   return (
     <ImageGalleryStyled>
@@ -14,6 +14,7 @@ const ImageGallery = props => {
             key={id}
             smallFormat={webformatURL}
             largeFormat={largeImageURL}
+            onClick={onClick}
           />
         );
       })}
@@ -22,4 +23,7 @@ const ImageGallery = props => {
 };
 export default ImageGallery;
 
-ImageGallery.propTypes = { imgArray: PropTypes.array.isRequired };
+ImageGallery.propTypes = {
+  imgArray: PropTypes.array.isRequired,
+  onClick: PropTypes.func.isRequired,
+};
